@@ -92,7 +92,7 @@ section h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0; pa
 <div class="wrap">
   <header>
     <h1>CEE CC Plan</h1>
-    <p class="sub">Chaitra 12 tak, 140 din. Topic complete hone par tick karo.</p>
+    <p class="sub">Chaitra 12 tak, 140 Days. Topic complete hone par tick karo.</p>
     <div class="status" id="status" aria-live="polite"></div>
   </header>
 
@@ -202,7 +202,7 @@ function refresh() {
     var pct = m ? Math.round(dm / m * 100) : 0, e = els[s.id];
     e.marks.textContent = dm + " / " + m + " marks";
     e.topics.textContent = dt + " / " + s.topics.length + " topics";
-    e.days.textContent = fmtRange(lo, hi) + " din planned";
+    e.days.textContent = fmtRange(lo, hi) + " Days planned";
     e.bar.style.width = pct + "%";
     e.chip.querySelector(".bar > i").style.width = pct + "%";
     e.chip.querySelector("span").textContent = dm + "/" + m + " marks, " + pct + "%";
@@ -213,7 +213,7 @@ function refresh() {
   document.getElementById("ov-bar").style.width = pct + "%";
   document.getElementById("ov-bar-wrap").setAttribute("aria-valuenow", pct);
   var left = fmtRange(TOTAL_DAYS - allHi, TOTAL_DAYS - allLo);
-  document.getElementById("ov-meta").textContent = doneTopics + "/" + allTopics + " topics done | " + fmtRange(allLo, allHi) + " din planned of " + TOTAL_DAYS + " | " + left + " din free";
+  document.getElementById("ov-meta").textContent = doneTopics + "/" + allTopics + " topics done | " + fmtRange(allLo, allHi) + " Days planned of " + TOTAL_DAYS + " | " + left + " Days free";
 }
 
 function queueSave() {
