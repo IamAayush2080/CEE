@@ -1,7 +1,11 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title>CEE CC Plan</title>
-<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>:root{color-scheme:light}body{margin:0}[hidden]{display:none!important}</style>
 <style>
 /* Layout: summary strip on top, then one list per subject. Row = tick | topic | marks | days. */
 :root {
@@ -82,11 +86,13 @@ section h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0; pa
 }
 @media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
 </style>
+</head>
+<body>
 
 <div class="wrap">
   <header>
     <h1>CEE CC Plan</h1>
-    <p class="sub">Chaitra 12 tak, 140 Days. Topic complete hone par tick karo.</p>
+    <p class="sub">Chaitra 12 tak, 140 din. Topic complete hone par tick karo.</p>
     <div class="status" id="status" aria-live="polite"></div>
   </header>
 
@@ -156,7 +162,7 @@ function build() {
     var sec = document.createElement("section"); sec.className = "s-" + s.id;
     sec.innerHTML = '<h2>' + s.name + '</h2><div class="shead"><span data-k="marks"></span><span data-k="topics"></span><span data-k="days"></span></div>' +
       '<div class="bar" style="border-radius:0;height:4px"><i data-k="bar"></i></div>' +
-      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Days</span></div>';
+      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Din</span></div>';
     s.topics.forEach(function (t) {
       var row = document.createElement("div"); row.className = "row"; row.id = "row-" + t.id;
       var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "cb-" + t.id; cb.setAttribute("aria-label", t.name + " complete");
@@ -196,7 +202,7 @@ function refresh() {
     var pct = m ? Math.round(dm / m * 100) : 0, e = els[s.id];
     e.marks.textContent = dm + " / " + m + " marks";
     e.topics.textContent = dt + " / " + s.topics.length + " topics";
-    e.days.textContent = fmtRange(lo, hi) + " Days planned";
+    e.days.textContent = fmtRange(lo, hi) + " din planned";
     e.bar.style.width = pct + "%";
     e.chip.querySelector(".bar > i").style.width = pct + "%";
     e.chip.querySelector("span").textContent = dm + "/" + m + " marks, " + pct + "%";
@@ -243,4 +249,5 @@ setStatus("Is browser mein save hota hai.");
 connect();
 </script>
 
-</body></html>
+</body>
+</html>
