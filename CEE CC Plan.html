@@ -1,0 +1,246 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>CEE CC Plan</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Hind:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: summary strip on top, then one list per subject. Row = tick | topic | marks | days. */
+:root {
+  --bg: #f4f5f2;
+  --surface: #ffffff;
+  --fg: #1d2420;
+  --muted: #64706a;
+  --line: #dde1dc;
+  --track: #e5e8e3;
+  --c-bot: #2f7d4f;
+  --c-zoo: #c2552f;
+  --c-chem: #7a4fb0;
+  --c-phy: #2b6cb0;
+  --font-display: "Bricolage Grotesque", "Hind", system-ui, sans-serif;
+  --font-body: "Hind", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141815; --surface: #1c221e; --fg: #e8ece8; --muted: #94a09a; --line: #2e362f; --track: #2a312b;
+    --c-bot: #5fbf84; --c-zoo: #ee8a64; --c-chem: #b793e6; --c-phy: #6eaee9;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141815; --surface: #1c221e; --fg: #e8ece8; --muted: #94a09a; --line: #2e362f; --track: #2a312b;
+  --c-bot: #5fbf84; --c-zoo: #ee8a64; --c-chem: #b793e6; --c-phy: #6eaee9;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.45;
+  padding-block: 28px 56px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 880px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+header { display: flex; flex-direction: column; gap: 6px; }
+h1 { font-family: var(--font-display); font-size: clamp(1.75rem, 5vw, 2.4rem); line-height: 1.1; margin: 0; letter-spacing: -0.01em; text-wrap: balance; }
+.sub { color: var(--muted); margin: 0; }
+.status { font-family: var(--font-mono); font-size: 0.75rem; color: var(--muted); min-height: 1.2em; }
+
+.overall { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px; display: flex; flex-direction: column; gap: 14px; }
+.overall-top { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; justify-content: space-between; }
+.big { font-family: var(--font-display); font-size: 1.6rem; font-weight: 700; }
+.big small { font-family: var(--font-body); font-size: 0.9rem; font-weight: 500; color: var(--muted); }
+.meta { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+.bar { height: 8px; background: var(--track); border-radius: 99px; overflow: hidden; }
+.bar > i { display: block; height: 100%; width: 0; background: var(--c, var(--fg)); border-radius: 99px; transition: width 0.25s ease; }
+.chips { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.chip { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.chip b { font-weight: 600; font-size: 0.9rem; color: var(--c); }
+.chip span { font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+
+section { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; }
+section h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0; padding: 14px 16px 4px; color: var(--c); }
+.shead { padding: 0 16px 12px; display: flex; flex-wrap: wrap; gap: 4px 16px; font-family: var(--font-mono); font-size: 0.78rem; color: var(--muted); }
+.cols, .row { display: grid; grid-template-columns: 28px minmax(0, 1fr) 54px 84px; gap: 10px; align-items: center; padding: 10px 16px; }
+.cols { font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); border-top: 1px solid var(--line); padding-block: 8px; }
+.cols .r, .row .marks { text-align: right; }
+.row { border-top: 1px solid var(--line); }
+.row .name { min-width: 0; overflow-wrap: anywhere; }
+.row .marks { font-family: var(--font-mono); font-size: 0.9rem; font-variant-numeric: tabular-nums; }
+.row input[type="checkbox"] { width: 20px; height: 20px; margin: 0; accent-color: var(--c); cursor: pointer; }
+.row input[type="text"] {
+  width: 100%; font: 500 0.9rem var(--font-mono); text-align: right; color: var(--fg);
+  background: transparent; border: 1px solid var(--line); border-radius: 6px; padding: 5px 8px;
+}
+.row input[type="text"]::placeholder { color: var(--muted); }
+.row.done .name { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--muted); }
+.row.done .marks { color: var(--muted); }
+:focus-visible { outline: 2px solid var(--c, var(--fg)); outline-offset: 2px; }
+.s-bot { --c: var(--c-bot); } .s-zoo { --c: var(--c-zoo); } .s-chem { --c: var(--c-chem); } .s-phy { --c: var(--c-phy); }
+@media (max-width: 420px) {
+  .cols, .row { grid-template-columns: 24px minmax(0, 1fr) 40px 72px; gap: 8px; padding-inline: 12px; }
+  section h2, .shead { padding-inline: 12px; }
+}
+@media (prefers-reduced-motion: reduce) { .bar > i { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header>
+    <h1>CEE CC Plan</h1>
+    <p class="sub">Chaitra 12 tak, 140 din. Topic complete hone par tick karo.</p>
+    <div class="status" id="status" aria-live="polite"></div>
+  </header>
+
+  <div class="overall" id="overall">
+    <div class="overall-top">
+      <div class="big" id="ov-marks">0 <small>/ 180 marks cover</small></div>
+      <div class="meta" id="ov-meta"></div>
+    </div>
+    <div class="bar" role="progressbar" aria-label="Total marks covered" id="ov-bar-wrap"><i id="ov-bar"></i></div>
+    <div class="chips" id="chips"></div>
+  </div>
+
+  <main id="subjects" class="wrap" style="gap:20px"></main>
+</div>
+
+<script>
+var TOTAL_DAYS = 140;
+var SUBJECTS = [
+  { id: "bot", name: "Botany", topics: [
+    ["Basic components of life", 2, "2"], ["Biodiversity", 9, "4"], ["Ecology and vegetation", 4, "2"],
+    ["Cell biology", 5, "2-3"], ["Genetics", 6, "5"], ["Plant anatomy", 3, "2"],
+    ["Plant physiology", 6, "1"], ["Developmental botany", 2, "2-3"], ["Applied botany", 3, "2"] ] },
+  { id: "zoo", name: "Zoology", topics: [
+    ["Evolutionary biology", 3, "0"], ["Animal diversity and classification", 4, "5"], ["Animal tissues and histology", 4, "5"],
+    ["Study of selected animals", 6, "5-6"], ["Human biology and physiology", 15, "7"], ["Microbial diseases and immunology", 4, "3-4"],
+    ["Medical technology and applied biology", 2, "2"], ["Biota, environment and conservation", 2, "2"] ] },
+  { id: "chem", name: "Chemistry", topics: [
+    ["Physical chemistry", 17, "22+8"], ["Inorganic chemistry", 10, ""], ["Organic chemistry", 17, ""],
+    ["Applied chemistry", 3, ""], ["Analytic chemistry", 3, ""] ] },
+  { id: "phy", name: "Physics", topics: [
+    ["Mechanics", 10, "12"], ["Heat and thermodynamics", 7, "6"], ["Waves and optics", 8, ""],
+    ["Current electricity and magnetism", 9, ""], ["Electrostatics and capacitors", 4, ""], ["Modern physics", 12, ""] ] }
+];
+SUBJECTS.forEach(function (s) { s.topics = s.topics.map(function (t, i) { return { id: s.id + i, name: t[0], marks: t[1], days: t[2] }; }); });
+
+var KEY = "cee-cc-plan-v1";
+var state = { done: {}, days: {} };
+var ref = null, chain = Promise.resolve(), timer = null;
+
+function loadLocal() {
+  try { var raw = localStorage.getItem(KEY); if (raw) return normalize(JSON.parse(raw)); } catch (e) {}
+  return null;
+}
+function saveLocal() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+function normalize(d) {
+  d = d || {};
+  return { done: (d.done && typeof d.done === "object") ? d.done : {}, days: (d.days && typeof d.days === "object") ? d.days : {} };
+}
+function daysOf(t) { return Object.prototype.hasOwnProperty.call(state.days, t.id) ? String(state.days[t.id]) : t.days; }
+function parseDays(s) {
+  s = String(s || "").trim(); if (!s) return null;
+  var lo = 0, hi = 0, parts = s.split("+");
+  for (var i = 0; i < parts.length; i++) {
+    var m = parts[i].trim().match(/^(\d+(?:\.\d+)?)(?:\s*-\s*(\d+(?:\.\d+)?))?$/);
+    if (!m) return null;
+    lo += parseFloat(m[1]); hi += parseFloat(m[2] != null ? m[2] : m[1]);
+  }
+  return [lo, hi];
+}
+function fmtRange(lo, hi) { return lo === hi ? String(lo) : lo + "-" + hi; }
+function setStatus(msg) { document.getElementById("status").textContent = msg; }
+
+var els = {};
+function build() {
+  var host = document.getElementById("subjects"), chips = document.getElementById("chips");
+  SUBJECTS.forEach(function (s) {
+    var sec = document.createElement("section"); sec.className = "s-" + s.id;
+    sec.innerHTML = '<h2>' + s.name + '</h2><div class="shead"><span data-k="marks"></span><span data-k="topics"></span><span data-k="days"></span></div>' +
+      '<div class="bar" style="border-radius:0;height:4px"><i data-k="bar"></i></div>' +
+      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Din</span></div>';
+    s.topics.forEach(function (t) {
+      var row = document.createElement("div"); row.className = "row"; row.id = "row-" + t.id;
+      var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "cb-" + t.id; cb.setAttribute("aria-label", t.name + " complete");
+      var nm = document.createElement("label"); nm.className = "name"; nm.htmlFor = cb.id; nm.textContent = t.name;
+      var mk = document.createElement("span"); mk.className = "marks"; mk.textContent = t.marks;
+      var dy = document.createElement("input"); dy.type = "text"; dy.id = "dy-" + t.id; dy.placeholder = "-"; dy.inputMode = "text"; dy.autocomplete = "off";
+      dy.setAttribute("aria-label", t.name + " days");
+      cb.addEventListener("change", function () { if (cb.checked) state.done[t.id] = true; else delete state.done[t.id]; refresh(); queueSave(); });
+      dy.addEventListener("input", function () { state.days[t.id] = dy.value; refresh(); queueSave(); });
+      row.append(cb, nm, mk, dy); sec.appendChild(row);
+      els[t.id] = { row: row, cb: cb, dy: dy };
+    });
+    host.appendChild(sec);
+    els[s.id] = { sec: sec, marks: sec.querySelector('[data-k="marks"]'), topics: sec.querySelector('[data-k="topics"]'), days: sec.querySelector('[data-k="days"]'), bar: sec.querySelector('[data-k="bar"]') };
+    var chip = document.createElement("div"); chip.className = "chip s-" + s.id;
+    chip.innerHTML = '<b>' + s.name + '</b><div class="bar"><i></i></div><span></span>';
+    chips.appendChild(chip); els[s.id].chip = chip;
+  });
+}
+
+function syncInputs() {
+  SUBJECTS.forEach(function (s) { s.topics.forEach(function (t) {
+    var e = els[t.id]; e.cb.checked = !!state.done[t.id];
+    if (document.activeElement !== e.dy) e.dy.value = daysOf(t);
+  }); });
+}
+
+function refresh() {
+  var allMarks = 0, doneMarks = 0, allLo = 0, allHi = 0, doneTopics = 0, allTopics = 0;
+  SUBJECTS.forEach(function (s) {
+    var m = 0, dm = 0, lo = 0, hi = 0, dt = 0;
+    s.topics.forEach(function (t) {
+      var done = !!state.done[t.id]; m += t.marks; if (done) { dm += t.marks; dt++; }
+      var r = parseDays(daysOf(t)); if (r) { lo += r[0]; hi += r[1]; }
+      els[t.id].row.classList.toggle("done", done);
+    });
+    var pct = m ? Math.round(dm / m * 100) : 0, e = els[s.id];
+    e.marks.textContent = dm + " / " + m + " marks";
+    e.topics.textContent = dt + " / " + s.topics.length + " topics";
+    e.days.textContent = fmtRange(lo, hi) + " din planned";
+    e.bar.style.width = pct + "%";
+    e.chip.querySelector(".bar > i").style.width = pct + "%";
+    e.chip.querySelector("span").textContent = dm + "/" + m + " marks, " + pct + "%";
+    allMarks += m; doneMarks += dm; allLo += lo; allHi += hi; doneTopics += dt; allTopics += s.topics.length;
+  });
+  var pct = allMarks ? Math.round(doneMarks / allMarks * 100) : 0;
+  document.getElementById("ov-marks").innerHTML = doneMarks + ' <small>/ ' + allMarks + ' marks cover (' + pct + '%)</small>';
+  document.getElementById("ov-bar").style.width = pct + "%";
+  document.getElementById("ov-bar-wrap").setAttribute("aria-valuenow", pct);
+  var left = fmtRange(TOTAL_DAYS - allHi, TOTAL_DAYS - allLo);
+  document.getElementById("ov-meta").textContent = doneTopics + "/" + allTopics + " topics done | " + fmtRange(allLo, allHi) + " din planned of " + TOTAL_DAYS + " | " + left + " din free";
+}
+
+function queueSave() {
+  saveLocal(); setStatus("Save ho raha hai...");
+  clearTimeout(timer);
+  timer = setTimeout(function () {
+    if (!ref) { setStatus("Is browser mein save ho gaya."); return; }
+    var snap = JSON.parse(JSON.stringify(state));
+    chain = chain.then(function () { return ref.set(snap); })
+      .then(function () { setStatus("Save ho gaya."); })
+      .catch(function () { setStatus("Is browser mein save ho gaya. Cloud save nahi hua."); });
+  }, 400);
+}
+
+async function connect() {
+  try {
+    if (!window.claude || !window.claude.use) return;
+    var u = await window.claude.use("user"), db = await window.claude.use("db");
+    if (!u || !db) return;
+    var id = await u.id(); if (!id) return;
+    var r = db.doc("data/users/" + id + "/plan");
+    var snap = await r.get();
+    if (snap.exists) { state = normalize(snap.data()); saveLocal(); syncInputs(); refresh(); }
+    else if (Object.keys(state.done).length || Object.keys(state.days).length) { await r.set(JSON.parse(JSON.stringify(state))); }
+    ref = r; setStatus("Account mein save hota hai, kisi bhi device se khulega.");
+  } catch (e) { /* local save still works */ }
+}
+
+build();
+state = loadLocal() || state;
+syncInputs(); refresh();
+setStatus("Is browser mein save hota hai.");
+connect();
+</script>
+
+</body></html>
