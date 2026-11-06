@@ -86,7 +86,7 @@ section h2 { font-family: var(--font-display); font-size: 1.25rem; margin: 0; pa
 <div class="wrap">
   <header>
     <h1>CEE CC Plan</h1>
-    <p class="sub">Chaitra 12 tak, 140 din. Topic complete hone par tick karo.</p>
+    <p class="sub">Chaitra 12 tak, 140 Days. Topic complete hone par tick karo.</p>
     <div class="status" id="status" aria-live="polite"></div>
   </header>
 
@@ -156,7 +156,7 @@ function build() {
     var sec = document.createElement("section"); sec.className = "s-" + s.id;
     sec.innerHTML = '<h2>' + s.name + '</h2><div class="shead"><span data-k="marks"></span><span data-k="topics"></span><span data-k="days"></span></div>' +
       '<div class="bar" style="border-radius:0;height:4px"><i data-k="bar"></i></div>' +
-      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Din</span></div>';
+      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Days</span></div>';
     s.topics.forEach(function (t) {
       var row = document.createElement("div"); row.className = "row"; row.id = "row-" + t.id;
       var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "cb-" + t.id; cb.setAttribute("aria-label", t.name + " complete");
@@ -196,7 +196,7 @@ function refresh() {
     var pct = m ? Math.round(dm / m * 100) : 0, e = els[s.id];
     e.marks.textContent = dm + " / " + m + " marks";
     e.topics.textContent = dt + " / " + s.topics.length + " topics";
-    e.days.textContent = fmtRange(lo, hi) + " din planned";
+    e.days.textContent = fmtRange(lo, hi) + " Days planned";
     e.bar.style.width = pct + "%";
     e.chip.querySelector(".bar > i").style.width = pct + "%";
     e.chip.querySelector("span").textContent = dm + "/" + m + " marks, " + pct + "%";
