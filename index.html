@@ -120,11 +120,11 @@ var SUBJECTS = [
     ["Study of selected animals", 6, "5-6"], ["Human biology and physiology", 15, "7"], ["Microbial diseases and immunology", 4, "3-4"],
     ["Medical technology and applied biology", 2, "2"], ["Biota, environment and conservation", 2, "2"] ] },
   { id: "chem", name: "Chemistry", topics: [
-    ["Physical chemistry", 17, "22+8"], ["Inorganic chemistry", 10, ""], ["Organic chemistry", 17, ""],
-    ["Applied chemistry", 3, ""], ["Analytic chemistry", 3, ""] ] },
+    ["Physical chemistry", 17, "22+8"], ["Inorganic chemistry", 10, "12"], ["Organic chemistry", 17, "5"],
+    ["Applied chemistry", 3, "3"], ["Analytic chemistry", 3, "3"] ] },
   { id: "phy", name: "Physics", topics: [
     ["Mechanics", 10, "12"], ["Heat and thermodynamics", 7, "6"], ["Waves and optics", 8, ""],
-    ["Current electricity and magnetism", 9, ""], ["Electrostatics and capacitors", 4, ""], ["Modern physics", 12, ""] ] }
+    ["Current electricity and magnetism", 9, ""], ["Electrostatics and capacitors", 4, ""], ["Modern physics", 12, "14"] ] }
 ];
 SUBJECTS.forEach(function (s) { s.topics = s.topics.map(function (t, i) { return { id: s.id + i, name: t[0], marks: t[1], days: t[2] }; }); });
 
@@ -162,7 +162,7 @@ function build() {
     var sec = document.createElement("section"); sec.className = "s-" + s.id;
     sec.innerHTML = '<h2>' + s.name + '</h2><div class="shead"><span data-k="marks"></span><span data-k="topics"></span><span data-k="days"></span></div>' +
       '<div class="bar" style="border-radius:0;height:4px"><i data-k="bar"></i></div>' +
-      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Din</span></div>';
+      '<div class="cols"><span></span><span>Topic</span><span class="r">Marks</span><span class="r">Days</span></div>';
     s.topics.forEach(function (t) {
       var row = document.createElement("div"); row.className = "row"; row.id = "row-" + t.id;
       var cb = document.createElement("input"); cb.type = "checkbox"; cb.id = "cb-" + t.id; cb.setAttribute("aria-label", t.name + " complete");
